@@ -15,5 +15,7 @@ namespace Fakelaki.Api.Lib.DAL
         public DbSet<Event> Events { get; set; }
 
         public DbSet<EmailTemplate> EmailTemplates { get; set; }
+
+        public DbSet<User> Users { get; set; }
     }
 }
