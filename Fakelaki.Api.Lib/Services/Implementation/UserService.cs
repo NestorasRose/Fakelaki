@@ -52,10 +52,14 @@ namespace Fakelaki.Api.Lib.Services.Implementation
         {
             // validation
             if (string.IsNullOrWhiteSpace(password))
-                throw new Log.Error("Password is required");
+            {
+                throw new Exception("Password is required");
+            }
 
             if (_context.Users.Any(x => x.Username == user.Username))
-                throw new Log.Error("Username \"" + user.Username + "\" is already taken");
+            {
+                throw new Exception("Username \"" + user.Username + "\" is already taken"); ;
+            }
 
             byte[] passwordHash, passwordSalt;
             CreatePasswordHash(password, out passwordHash, out passwordSalt);
@@ -74,14 +78,18 @@ namespace Fakelaki.Api.Lib.Services.Implementation
             var user = _context.Users.Find(userParam.Id);
 
             if (user == null)
-                throw new Log.Error("User not found");
+            {
+                throw new Exception("User not found");
+            }
 
             // update username if it has changed
             if (!string.IsNullOrWhiteSpace(userParam.Username) && userParam.Username != user.Username)
             {
                 // throw error if the new username is already taken
                 if (_context.Users.Any(x => x.Username == userParam.Username))
-                    throw new Log.Error("Username " + userParam.Username + " is already taken");
+                {
+                    throw new Exception("Username " + userParam.Username + " is already taken");
+                }
 
                 user.Username = userParam.Username;
             }
