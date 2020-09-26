@@ -1,10 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "C9j4kBkXWNFIBuolYtADSfX4vSojUrMSGqQg3ZC4nvcT9qxsNcvK6PzHt7wYaS4cRWxJspGL5N6UUTMKOXtaDQ==",
+  "dgSpecHash": "Tm8DMEo2EPfDKiR6dbOOYPE45lUgIF31c6nERygW+o2P7rOQCVZaPUzJrocM+PQSe93yeByCiXIgKLi3LxvzRQ==",
   "success": true,
   "projectFilePath": "C:\\repos\\Fakelaki\\Fakelaki.Api\\Fakelaki.Api.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Nestoras Rose\\.nuget\\packages\\automapper\\10.0.0\\automapper.10.0.0.nupkg.sha512",
+    "C:\\Users\\Nestoras Rose\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\8.0.1\\automapper.extensions.microsoft.dependencyinjection.8.0.1.nupkg.sha512",
     "C:\\Users\\Nestoras Rose\\.nuget\\packages\\microsoft.aspnetcore.authentication.jwtbearer\\3.1.8\\microsoft.aspnetcore.authentication.jwtbearer.3.1.8.nupkg.sha512",
     "C:\\Users\\Nestoras Rose\\.nuget\\packages\\microsoft.bcl.asyncinterfaces\\1.1.1\\microsoft.bcl.asyncinterfaces.1.1.1.nupkg.sha512",
     "C:\\Users\\Nestoras Rose\\.nuget\\packages\\microsoft.bcl.hashcode\\1.1.0\\microsoft.bcl.hashcode.1.1.0.nupkg.sha512",

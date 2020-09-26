@@ -97,3 +97,5 @@ C:\repos\Fakelaki\Fakelaki.Api\obj\Debug\netcoreapp3.1\Fakelaki.Api.AssemblyInfo
 C:\repos\Fakelaki\Fakelaki.Api\obj\Debug\netcoreapp3.1\Fakelaki.Api.AssemblyInfo.cs
 C:\repos\Fakelaki\Fakelaki.Api\obj\Debug\netcoreapp3.1\Fakelaki.Api.RazorTargetAssemblyInfo.cache
 C:\repos\Fakelaki\Fakelaki.Api\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+C:\repos\Fakelaki\Fakelaki.Api\bin\Debug\netcoreapp3.1\AutoMapper.dll
+C:\repos\Fakelaki\Fakelaki.Api\bin\Debug\netcoreapp3.1\Serilog.dll
