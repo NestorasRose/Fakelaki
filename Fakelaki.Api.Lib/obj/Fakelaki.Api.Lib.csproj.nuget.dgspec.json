@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\repos\\Fakelaki\\Fakelaki.Api.Lib\\Fakelaki.Api.Lib.csproj": {}
+    "C:\\repos\\Fakelaki.Api\\Fakelaki.Api.Lib\\Fakelaki.Api.Lib.csproj": {}
   },
   "projects": {
-    "C:\\repos\\Fakelaki\\Fakelaki.Api.Lib\\Fakelaki.Api.Lib.csproj": {
+    "C:\\repos\\Fakelaki.Api\\Fakelaki.Api.Lib\\Fakelaki.Api.Lib.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\repos\\Fakelaki\\Fakelaki.Api.Lib\\Fakelaki.Api.Lib.csproj",
+        "projectUniqueName": "C:\\repos\\Fakelaki.Api\\Fakelaki.Api.Lib\\Fakelaki.Api.Lib.csproj",
         "projectName": "Fakelaki.Api.Lib",
-        "projectPath": "C:\\repos\\Fakelaki\\Fakelaki.Api.Lib\\Fakelaki.Api.Lib.csproj",
-        "packagesPath": "C:\\Users\\Nestoras Rose\\.nuget\\packages\\",
-        "outputPath": "C:\\repos\\Fakelaki\\Fakelaki.Api.Lib\\obj\\",
+        "projectPath": "C:\\repos\\Fakelaki.Api\\Fakelaki.Api.Lib\\Fakelaki.Api.Lib.csproj",
+        "packagesPath": "C:\\Users\\nrose\\.nuget\\packages\\",
+        "outputPath": "C:\\repos\\Fakelaki.Api\\Fakelaki.Api.Lib\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
-          "C:\\Users\\Nestoras Rose\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\nrose\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -25,7 +25,8 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "https://api.nuget.org/v3/index.json": {}
+          "https://api.nuget.org/v3/index.json": {},
+          "https://tmsdev.pkgs.visualstudio.com/_packaging/TMS/nuget/v3/index.json": {}
         },
         "frameworks": {
           "netstandard2.0": {
@@ -70,7 +71,7 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.402\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.301\\RuntimeIdentifierGraph.json"
         }
       }
     }
