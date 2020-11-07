@@ -27,7 +27,7 @@ namespace Fakelaki.Api.Controllers
         }
 
 
-        [HttpGet]
+        [HttpGet("{id}")]
         public IActionResult Get(int id)
         {
             var eventt = _eventService.Get(id);
@@ -36,7 +36,7 @@ namespace Fakelaki.Api.Controllers
         }
 
 
-        [HttpGet]
+        [HttpGet("{userId}")]
         public IActionResult GetAllUserEvents(int userId)
         {
             var events = _eventService.GetByUser(userId);
@@ -44,7 +44,7 @@ namespace Fakelaki.Api.Controllers
             return Ok(model);
         }
 
-        [HttpPost]
+        [HttpPost("{userId}")]
         public IActionResult Create([FromBody] EventModel eventModel, int userId)
         {
             // map model to entity
