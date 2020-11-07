@@ -85,6 +85,7 @@ namespace Fakelaki.Api
 
             // configure DI for application services
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IEventService, EventService>();
 
             // Register the Swagger generator, defining 1 or more Swagger documents
             services.AddSwaggerGen();
