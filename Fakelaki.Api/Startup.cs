@@ -14,6 +14,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Fakelaki.Api.Lib.Services.Implementation;
+using System.Collections.Generic;
 
 namespace Fakelaki.Api
 {

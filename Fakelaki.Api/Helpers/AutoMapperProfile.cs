@@ -9,8 +9,6 @@ namespace Fakelaki.Api.Helpers
         public AutoMapperProfile()
         {
             CreateMap<User, UserModel>().ReverseMap();
-            CreateMap<RegisterModel, User>();
-            CreateMap<UpdateModel, User>();
         }
     }
 }
