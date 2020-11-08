@@ -15,6 +15,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Fakelaki.Api.Lib.Services.Implementation;
 using System.Collections.Generic;
+using Fakelaki.Api.Lib.Helpers;
 
 namespace Fakelaki.Api
 {
@@ -86,6 +87,11 @@ namespace Fakelaki.Api
             // configure DI for application services
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IEventService, EventService>();
+            services.AddScoped<IFakelakiService, FakelakiService>();
+            services.AddTransient<IMailService, MailService>();
+
+            // Add mail settings conguration IoC container
+            services.Configure<MailSettings>(Configuration.GetSection("MailSettings"));
 
             // Register the Swagger generator, defining 1 or more Swagger documents
             services.AddSwaggerGen();

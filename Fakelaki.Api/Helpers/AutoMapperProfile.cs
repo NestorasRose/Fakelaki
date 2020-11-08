@@ -10,6 +10,7 @@ namespace Fakelaki.Api.Helpers
         {
             CreateMap<User, UserModel>().ReverseMap();
             CreateMap<Event, EventModel>().ReverseMap();
+            CreateMap<Lib.Models.Fakelaki, FakelakiModel>().ReverseMap();
         }
     }
 }

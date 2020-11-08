@@ -24,6 +24,7 @@ namespace Fakelaki.Api.Controllers
         {
             _logger = logger;
             _eventService = eventService;
+            _mapper = mapper;
         }
 
 
