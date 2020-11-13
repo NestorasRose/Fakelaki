@@ -3,15 +3,17 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30204.135
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fakelaki.Api", "Fakelaki.Api\Fakelaki.Api.csproj", "{19B490B2-16F5-4C10-BBB2-BE38BA418FF1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fakelaki.Api", "Fakelaki.Api\Fakelaki.Api.csproj", "{19B490B2-16F5-4C10-BBB2-BE38BA418FF1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fakelaki.Api.Lib", "Fakelaki.Api.Lib\Fakelaki.Api.Lib.csproj", "{F44298B1-DF85-467D-A092-6BA93FA26792}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fakelaki.Api.Lib", "Fakelaki.Api.Lib\Fakelaki.Api.Lib.csproj", "{F44298B1-DF85-467D-A092-6BA93FA26792}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UnitTests", "UnitTests", "{C8524D88-84D0-45E6-A883-E91146BE4D0D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fakelaki.Api.Tests", "Fakelaki.Api.Tests\Fakelaki.Api.Tests.csproj", "{0C352912-E733-492D-A169-C4D6AF48E573}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fakelaki.Api.Tests", "Fakelaki.Api.Tests\Fakelaki.Api.Tests.csproj", "{0C352912-E733-492D-A169-C4D6AF48E573}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fakelaki.Api.Lib.Tests", "Fakelaki.Api.Lib.Tests\Fakelaki.Api.Lib.Tests.csproj", "{A49BA7DB-C449-4614-8B3A-66FF7319A6BE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fakelaki.Api.Lib.Tests", "Fakelaki.Api.Lib.Tests\Fakelaki.Api.Lib.Tests.csproj", "{A49BA7DB-C449-4614-8B3A-66FF7319A6BE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fakelaki.Api.JCCPayments", "Fakelaki.Api.JCCPayments\Fakelaki.Api.JCCPayments.csproj", "{C824AB6C-AC43-460C-9A38-BF52FCF5590F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -35,6 +37,10 @@ Global
 		{A49BA7DB-C449-4614-8B3A-66FF7319A6BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A49BA7DB-C449-4614-8B3A-66FF7319A6BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A49BA7DB-C449-4614-8B3A-66FF7319A6BE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C824AB6C-AC43-460C-9A38-BF52FCF5590F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C824AB6C-AC43-460C-9A38-BF52FCF5590F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C824AB6C-AC43-460C-9A38-BF52FCF5590F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C824AB6C-AC43-460C-9A38-BF52FCF5590F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
