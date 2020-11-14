@@ -16,6 +16,9 @@ using Microsoft.IdentityModel.Tokens;
 using Fakelaki.Api.Lib.Services.Implementation;
 using System.Collections.Generic;
 using Fakelaki.Api.Lib.Helpers;
+using Fakelaki.Api.JCCPayments.Helpers;
+using Fakelaki.Api.JCCPayments.Services.Implimentation;
+using Fakelaki.Api.JCCPayments.Services.Interfaces;
 
 namespace Fakelaki.Api
 {
@@ -89,9 +92,14 @@ namespace Fakelaki.Api
             services.AddScoped<IEventService, EventService>();
             services.AddScoped<IFakelakiService, FakelakiService>();
             services.AddTransient<IMailService, MailService>();
+            services.AddSingleton<IQRCoderService, QRCoderService>();
 
             // Add mail settings conguration IoC container
             services.Configure<MailSettings>(Configuration.GetSection("MailSettings"));
+
+            // Add JCC settings conguration IoC container
+            services.Configure<JccSettings>(Configuration.GetSection("JccSettings"));
+            services.AddSingleton<IJccGateway, JccGateway>();
 
             // Register the Swagger generator, defining 1 or more Swagger documents
             services.AddSwaggerGen();

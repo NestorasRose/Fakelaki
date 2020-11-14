@@ -12,6 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Fakelaki.Api.JCCPayments\Fakelaki.Api.JCCPayments.csproj" />
     <ProjectReference Include="..\Fakelaki.Api.Lib\Fakelaki.Api.Lib.csproj" />
   </ItemGroup>
 

@@ -1,4 +1,5 @@
-﻿using Fakelaki.Api.JCCPayments.Models;
+﻿using Fakelaki.Api.JCCPayments.Enums;
+using Fakelaki.Api.JCCPayments.Models;
 
 namespace Fakelaki.Api.JCCPayments.Services.Interfaces
 {

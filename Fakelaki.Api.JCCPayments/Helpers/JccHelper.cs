@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace Fakelaki.Api.JCCPayments.Helpers
@@ -12,7 +13,7 @@ namespace Fakelaki.Api.JCCPayments.Helpers
         {
             int THE_SIZE = value.Length;
             byte[] theMessageAsBytes = new byte[THE_SIZE + 1];
-            theMessageAsBytes = System.Text.Encoding.ASCII.GetBytes(value);
+            theMessageAsBytes = Encoding.ASCII.GetBytes(value);
             byte[] theResult;
             System.Security.Cryptography.MD5CryptoServiceProvider md5 = new System.Security.Cryptography.MD5CryptoServiceProvider();
             theResult = md5.ComputeHash(theMessageAsBytes);
@@ -21,9 +22,9 @@ namespace Fakelaki.Api.JCCPayments.Helpers
 
         public static string CalculateSHA1Hash(string value)
         {
-            int THE_SIZE = value.Length;
-            byte[] theMessageAsBytes = new byte[THE_SIZE + 1];
-            theMessageAsBytes = System.Text.Encoding.ASCII.GetBytes(value);
+            int size = value.Length;
+            var theMessageAsBytes = new byte[size + 1];
+            theMessageAsBytes = Encoding.ASCII.GetBytes(value);
             byte[] theResult;
             System.Security.Cryptography.SHA1CryptoServiceProvider sha = new System.Security.Cryptography.SHA1CryptoServiceProvider();
             theResult = sha.ComputeHash(theMessageAsBytes);
@@ -37,14 +38,14 @@ namespace Fakelaki.Api.JCCPayments.Helpers
         }
 
         // MerID N(15)
-        public static void CheckMerID(string value)
+        public static void CheckMerchantId(string value)
         {
             if (VerifyNumeric(value, 15) == false)
                 throw new Exception("JCC Merchant ID is invalid!");
         }
 
         // AcqID N(11)
-        public static void CheckAcqID(string value)
+        public static void CheckAcquirerId(string value)
         {
             if (VerifyNumeric(value, 15) == false)
                 throw new Exception("JCC Acquirer ID is invalid!");
@@ -79,7 +80,7 @@ namespace Fakelaki.Api.JCCPayments.Helpers
         {
             if (IsNumeric(value.ToString()) == false)
                 return false;
-            string strValue = System.Convert.ToString(value);
+            string strValue = Convert.ToString(value);
             if (strValue.Length > length)
                 return false;
             if (matchExactlength == true)
@@ -91,7 +92,7 @@ namespace Fakelaki.Api.JCCPayments.Helpers
         }
         private static bool IsNumeric(string value)
         {
-            return value.All(System.Char.IsDigit);
+            return value.All(Char.IsDigit);
         }
 
         public static string GetPaddedAmount(decimal amount)

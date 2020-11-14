@@ -1,11 +1,11 @@
-﻿namespace Fakelaki.Api.JCCPayments.Models
+﻿using Fakelaki.Api.JCCPayments.Enums;
+
+namespace Fakelaki.Api.JCCPayments.Models
 {
     public class TransactionResponse
     {
 
         public StatusCodedFiled Status { get; set; }
         public string Message { get; set; }
-
-
     }
 }

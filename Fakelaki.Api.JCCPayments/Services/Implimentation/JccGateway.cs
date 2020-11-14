@@ -1,6 +1,8 @@
-﻿using Fakelaki.Api.JCCPayments.Helpers;
+﻿using Fakelaki.Api.JCCPayments.Enums;
+using Fakelaki.Api.JCCPayments.Helpers;
 using Fakelaki.Api.JCCPayments.Models;
 using Fakelaki.Api.JCCPayments.Services.Interfaces;
+using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
 using System.Net;
@@ -18,24 +20,13 @@ namespace Fakelaki.Api.JCCPayments.Services.Implimentation
         #endregion
 
         #region Fields
-        private readonly string _merchantId;
-        private readonly string _acquirerId;
-        private readonly string _password;
-        private readonly bool _isTestMode;
-        private readonly string _responseURL;
+        private readonly JccSettings _jccSettings;
         #endregion
 
         #region Ctor
-        public JccGateway(string marchentId, string acquirerId, string password, bool isTestMode, string responseURL)
+        public JccGateway(IOptions<JccSettings> jccSettings)
         {
-            JccHelper.CheckMerID(marchentId);
-            _merchantId = marchentId;
-            JccHelper.CheckMerID(acquirerId);
-            _acquirerId = acquirerId;
-            JccHelper.CheckPassword(password);
-            _password = password;
-            _isTestMode = isTestMode;
-            _responseURL = responseURL;
+            _jccSettings = jccSettings.Value;
         }
 
         #endregion
@@ -57,7 +48,7 @@ namespace Fakelaki.Api.JCCPayments.Services.Implimentation
 
             try
             {
-                string toEncrypt = $"{_password}{_merchantId}{_acquirerId}{jccResponse.OrderId}{jccResponse.ResponseCode}{jccResponse.ReasonCode}";
+                string toEncrypt = $"{_jccSettings.Password}{_jccSettings.MerchantId}{_jccSettings.AcquirerId}{jccResponse.OrderId}{jccResponse.ResponseCode}{jccResponse.ReasonCode}";
                 string hash = JccHelper.CalculateSHA1Hash(toEncrypt);
                 if (hash.Equals(jccResponse.Signature))
                 {
@@ -98,9 +89,9 @@ namespace Fakelaki.Api.JCCPayments.Services.Implimentation
             return new Dictionary<string, string>
             {
                 ["Version"] = Version,
-                ["MerID"] = _merchantId,
-                ["AcqID"] = _acquirerId,
-                ["MerRespURL"] = _responseURL,
+                ["MerID"] = _jccSettings.MerchantId,
+                ["AcqID"] = _jccSettings.AcquirerId,
+                ["MerRespURL"] = _jccSettings.ResponseURL,
                 ["PurchaseAmt"] = ProcessPruchaseAmount(purchaseAmount),
                 ["PurchaseCurrency"] = ((int)currencyCode).ToString(),
                 ["PurchaseCurrencyExponent"] = CurrencyExp.ToString(),
@@ -116,9 +107,9 @@ namespace Fakelaki.Api.JCCPayments.Services.Implimentation
             var roundedOrderTotal = Math.Round(purchaseAmount, CurrencyExp);
 
             string value =
-                _password +
-                _merchantId +
-                _acquirerId +
+                _jccSettings.Password +
+                _jccSettings.MerchantId +
+                _jccSettings.AcquirerId +
                 orderId +
                 JccHelper.GetPaddedAmount(roundedOrderTotal) +
                 (int)currencyCode;
@@ -154,14 +145,14 @@ namespace Fakelaki.Api.JCCPayments.Services.Implimentation
             HttpWebRequest request;
             try
             {
-                request = WebRequest.Create(JccHelper.GetJccURL(_isTestMode)) as HttpWebRequest;
+                request = WebRequest.Create(JccHelper.GetJccURL(_jccSettings.IsTestMode)) as HttpWebRequest;
             }
             catch (UriFormatException)
             {
                 request = null;
             }
             if (request == null)
-                throw new ApplicationException("Invalid URL: " + JccHelper.GetJccURL(_isTestMode));
+                throw new ApplicationException("Invalid URL: " + JccHelper.GetJccURL(_jccSettings.IsTestMode));
             request.Method = "POST";
             request.ContentType = "application/x-www-form-urlencoded";
             request.ContentLength = postBytes.Length;

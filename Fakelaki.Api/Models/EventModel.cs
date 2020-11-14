@@ -16,5 +16,7 @@ namespace Fakelaki.Api.Models
 
         [Required]
         public DateTime EndDate { get; set; }
+
+        public string QRCodeBase64 { get; set; }
     }
 }
