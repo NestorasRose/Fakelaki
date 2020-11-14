@@ -67,7 +67,7 @@ namespace Fakelaki.Api.Controllers
             }
         }
 
-        [HttpPatch]
+        [HttpPut]
         public IActionResult Update([FromBody] EventModel model)
         {
             try
