@@ -102,7 +102,9 @@ namespace Fakelaki.Api
             services.AddSingleton<IJccGateway, JccGateway>();
 
             // Register the Swagger generator, defining 1 or more Swagger documents
-            services.AddSwaggerGen();
+            services.AddSwaggerGen(c => {
+                c.DescribeAllEnumsAsStrings();
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

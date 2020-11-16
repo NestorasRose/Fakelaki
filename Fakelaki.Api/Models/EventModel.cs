@@ -1,5 +1,8 @@
-﻿using System;
+﻿using Fakelaki.Api.Lib.Enums;
+using Newtonsoft.Json.Converters;
+using System;
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace Fakelaki.Api.Models
 {
@@ -10,6 +13,10 @@ namespace Fakelaki.Api.Models
 
         [Required]
         public string Name { get; set; }
+
+        [Required]
+        [JsonConverter(typeof(StringEnumConverter))]
+        public EventType Type { get; set; }
 
         [Required]
         public DateTime StartDate { get; set; }
