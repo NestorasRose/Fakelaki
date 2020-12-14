@@ -24,6 +24,18 @@ namespace Fakelaki.Api.Lib.Services.Implementation
             return _context.Events.Find(fakelakiId).Fakelakia;
         }
 
+        public void SetSuccessfullPayment(string paymentIntentId)
+        {
+            var fakelaki = _context.Fakelakia.Where(x => x.PaymentIntentId == paymentIntentId).FirstOrDefault();
+            
+            if(fakelaki == null)
+            {
+                throw new Exception($"Unable to find fakelaki for payment intend id '{paymentIntentId}'.");
+            }
+
+            fakelaki.SuccessfullPayment = true;
+            _context.SaveChanges();
+        }
 
         public Models.Fakelaki Create(Models.Fakelaki fakelaki, int emailTemplateId, int eventId)
         {

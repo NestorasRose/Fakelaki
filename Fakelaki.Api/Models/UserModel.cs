@@ -11,5 +11,11 @@ namespace Fakelaki.Api.Models
 
         [Required]
         public string Password { get; set; }
+
+        // Stripe Account Id
+        public string AccountId { get; set; }
+
+        // Stripe Account Link Url
+        public string AccountLinkUrl { get; set; }
     }
 }

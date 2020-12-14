@@ -9,6 +9,8 @@ using Fakelaki.Api.Lib.Models;
 using Fakelaki.Api.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Stripe;
+using System.IO;
 
 namespace Fakelaki.Api.Controllers
 {
@@ -39,19 +41,91 @@ namespace Fakelaki.Api.Controllers
         public IActionResult Create([FromBody] FakelakiModel model, int emailTemplateId, int eventId)
         {
             // map model to entity
+
+            if (model == null)
+            {
+                return BadRequest(new { message = "Fakelaki object is null." });
+            }
+            
+            // set succesfull payment to false since it has not been completed yet
+            model.SuccessfullPayment = false;
+
             var fakelaki = _mapper.Map<Lib.Models.Fakelaki>(model);
 
             try
             {
-                // create user
+                // Set your secret key. Remember to switch to your live secret key in production!
+                // See your keys here: https://dashboard.stripe.com/account/apikeys
+                StripeConfiguration.ApiKey = "sk_test_4eC39HqLyjWDarjtT1zdp7dc";// TODO
+
+                var service = new PaymentIntentService();
+                var createOptions = new PaymentIntentCreateOptions
+                {
+                    PaymentMethodTypes = new List<string>
+                      {
+                        "card",
+                      },
+                    Amount = model.Amount,
+                    Currency = "eur",
+                    ApplicationFeeAmount = 100, //The fee that we get
+                };
+
+                var requestOptions = new RequestOptions();
+                requestOptions.StripeAccount = "{{CONNECTED_STRIPE_ACCOUNT_ID}}";// TODO
+
+
+                PaymentIntent paymentIntent = service.Create(createOptions, requestOptions);
+                fakelaki.PaymentIntentId = paymentIntent.Id;
+
+                // create fakelaki
                 _fakelakiService.Create(fakelaki, emailTemplateId, eventId);
-                return Ok();
+
+                return Ok(new { client_secret = paymentIntent.ClientSecret });
             }
             catch (Exception ex)
             {
                 // return error message if there was an exception
                 return BadRequest(new { message = ex.Message });
             }
+        }
+
+        [HttpPost("webhook")]
+        public async Task<IActionResult> ProcessWebhookEvent()
+        {
+            var json = await new StreamReader(HttpContext.Request.Body).ReadToEndAsync();
+
+            // Uncomment and replace with a real secret. You can find your endpoint's
+            // secret in your webhook settings.
+            const string webhookSecret = "whsec_...";// TODO
+
+            // Verify webhook signature and extract the event.
+            // See https://stripe.com/docs/webhooks/signatures for more information.
+            try
+            {
+                var stripeEvent = EventUtility.ConstructEvent(json, Request.Headers["Stripe-Signature"], webhookSecret);
+
+                if (stripeEvent.Type == Events.PaymentIntentSucceeded)
+                {
+                    var paymentIntent = stripeEvent.Data.Object as PaymentIntent;
+                    var connectedAccountId = stripeEvent.Account;
+                    HandleSuccessfulPaymentIntent(connectedAccountId, paymentIntent);
+                    _fakelakiService.SetSuccessfullPayment(paymentIntent.Id);
+                }
+
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                _logger.LogInformation(e.ToString());
+                return BadRequest();
+            }
+        }
+
+        private void HandleSuccessfulPaymentIntent(string connectedAccountId, PaymentIntent paymentIntent)
+        {
+            // Fulfill the purchase.
+            _logger.LogInformation($"Connected account ID: {connectedAccountId}");
+            _logger.LogInformation($"{paymentIntent}");
         }
     }
 }

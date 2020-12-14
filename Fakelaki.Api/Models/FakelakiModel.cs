@@ -20,6 +20,9 @@ namespace Fakelaki.Api.Models
         public string Message { get; set; }
 
         [Required]
-        public decimal Amount { get; set; }
+        public int Amount { get; set; }
+
+
+        public bool SuccessfullPayment { get; set; }
     }
 }

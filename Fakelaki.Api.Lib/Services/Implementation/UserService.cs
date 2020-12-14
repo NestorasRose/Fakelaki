@@ -48,6 +48,12 @@ namespace Fakelaki.Api.Lib.Services.Implementation
             return _context.Users.Find(id);
         }
 
+
+        public User GetByAccountId(string accountId)
+        {
+            return _context.Users.Where(x => x.AccountId == accountId).FirstOrDefault();
+        }
+
         public User Create(User user, string password)
         {
             // validation

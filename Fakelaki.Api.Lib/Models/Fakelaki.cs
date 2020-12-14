@@ -14,7 +14,11 @@ namespace Fakelaki.Api.Lib.Models
 
         public string Message { get; set; }
 
-        public decimal Amount { get; set; }
+        public int Amount { get; set; }
+
+        public string PaymentIntentId { get; set; }
+
+        public bool SuccessfullPayment { get; set; }
 
         public virtual EmailTemplate EmailTemplate { get; set; }
     }

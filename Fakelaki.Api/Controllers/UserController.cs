@@ -12,6 +12,7 @@ using Fakelaki.Api.Models;
 using Fakelaki.Api.Lib.Models;
 using Fakelaki.Api.Lib.Services.Interfaces;
 using Fakelaki.Api.Helpers;
+using Stripe;
 
 namespace Fakelaki.Api.Controllers
 {
@@ -75,8 +76,33 @@ namespace Fakelaki.Api.Controllers
 
             try
             {
-                // create user
-                _userService.Create(user, model.Password);
+
+                // Set your secret key. Remember to switch to your live secret key in production!
+                // See your keys here: https://dashboard.stripe.com/account/apikeys
+                StripeConfiguration.ApiKey = "sk_test_4eC39HqLyjWDarjtT1zdp7dc";
+
+                var options = new AccountCreateOptions
+                {
+                    Type = "standard",
+                };
+
+                var service = new AccountService();
+                Account account = service.Create(options);
+
+                if(account != null && !string.IsNullOrWhiteSpace(account.Id))
+                {
+                    user.AccountId = account.Id;
+                    // create user
+                    _userService.Create(user, model.Password);
+                }
+                else
+                {
+                    // return error message if there was an exception
+                    return BadRequest(new { message = "Unable to create a payment account for the user!" });
+                }
+
+
+
                 return Ok();
             }
             catch (Exception ex)
@@ -128,5 +154,27 @@ namespace Fakelaki.Api.Controllers
             _userService.Delete(id);
             return Ok();
         }
+
+        [HttpPost]
+        public IActionResult CreateStripeAccountLink(AccountLinkCreateOptions options)
+        {
+
+            if (options == null || string.IsNullOrWhiteSpace(options.Account) || string.IsNullOrWhiteSpace(options.RefreshUrl) || string.IsNullOrWhiteSpace(options.ReturnUrl))
+                return BadRequest(new { message = "You need to specify Account Id, Refresh Url and Return Url." });
+
+            // Set your secret key. Remember to switch to your live secret key in production!
+            // See your keys here: https://dashboard.stripe.com/account/apikeys
+            StripeConfiguration.ApiKey = "sk_test_4eC39HqLyjWDarjtT1zdp7dc";
+            options.Type = "account_onboarding";
+
+            var service = new AccountLinkService();
+            var accountLink = service.Create(options);
+
+            var user = _userService.GetByAccountId(options.Account);
+            user.AccountLinkUrl = accountLink.Url;
+            _userService.Update(user);
+            return Ok();
+        }
+
     }
 }
