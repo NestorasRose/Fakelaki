@@ -28,11 +28,15 @@ namespace Fakelaki.Api.Controllers
         public UserController(
             IUserService userService,
             IMapper mapper,
-            IOptions<AppSettings> appSettings)
+            IOptions<AppSettings> appSettings, 
+            StripeSettings stripeSettings)
         {
             _userService = userService;
             _mapper = mapper;
             _appSettings = appSettings.Value;
+            // Set your secret key. Remember to switch to your live secret key in production!
+            // See your keys here: https://dashboard.stripe.com/account/apikeys
+            StripeConfiguration.ApiKey = stripeSettings.ApiKey;
         }
 
         [AllowAnonymous]
@@ -76,11 +80,6 @@ namespace Fakelaki.Api.Controllers
 
             try
             {
-
-                // Set your secret key. Remember to switch to your live secret key in production!
-                // See your keys here: https://dashboard.stripe.com/account/apikeys
-                StripeConfiguration.ApiKey = "sk_test_4eC39HqLyjWDarjtT1zdp7dc";
-
                 var options = new AccountCreateOptions
                 {
                     Type = "standard",
@@ -155,25 +154,19 @@ namespace Fakelaki.Api.Controllers
             return Ok();
         }
 
-        [HttpPost]
+        [HttpPost("CreateStripeAccountLink")]
         public IActionResult CreateStripeAccountLink(AccountLinkCreateOptions options)
         {
 
             if (options == null || string.IsNullOrWhiteSpace(options.Account) || string.IsNullOrWhiteSpace(options.RefreshUrl) || string.IsNullOrWhiteSpace(options.ReturnUrl))
                 return BadRequest(new { message = "You need to specify Account Id, Refresh Url and Return Url." });
 
-            // Set your secret key. Remember to switch to your live secret key in production!
-            // See your keys here: https://dashboard.stripe.com/account/apikeys
-            StripeConfiguration.ApiKey = "sk_test_4eC39HqLyjWDarjtT1zdp7dc";
             options.Type = "account_onboarding";
 
             var service = new AccountLinkService();
             var accountLink = service.Create(options);
 
-            var user = _userService.GetByAccountId(options.Account);
-            user.AccountLinkUrl = accountLink.Url;
-            _userService.Update(user);
-            return Ok();
+            return Ok(accountLink);
         }
 
     }

@@ -54,6 +54,18 @@ namespace Fakelaki.Api.Lib.Services.Implementation
             return _context.Users.Where(x => x.AccountId == accountId).FirstOrDefault();
         }
 
+        public string GetAccountIdByEventid(int eventId)
+        {
+            var user = _context.Users.Where(x => x.Events.Where(y => y.Id == eventId).Count() > 0).FirstOrDefault();
+
+            if(user == null)
+            {
+                throw new Exception("Connected Account Id not valid!");
+            }
+
+            return user.AccountId;
+        }
+
         public User Create(User user, string password)
         {
             // validation

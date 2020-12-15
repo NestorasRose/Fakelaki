@@ -14,8 +14,5 @@ namespace Fakelaki.Api.Models
 
         // Stripe Account Id
         public string AccountId { get; set; }
-
-        // Stripe Account Link Url
-        public string AccountLinkUrl { get; set; }
     }
 }

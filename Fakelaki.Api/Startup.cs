@@ -101,6 +101,9 @@ namespace Fakelaki.Api
             services.Configure<JccSettings>(Configuration.GetSection("JccSettings"));
             services.AddSingleton<IJccGateway, JccGateway>();
 
+            // Add Stripe settings conguration IoC container
+            services.Configure<StripeSettings>(Configuration.GetSection("StripeSettings"));
+
             // Register the Swagger generator, defining 1 or more Swagger documents
             services.AddSwaggerGen(c => {
                 c.DescribeAllEnumsAsStrings();

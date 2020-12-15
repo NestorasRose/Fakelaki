@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Stripe;
 using System.IO;
+using Fakelaki.Api.Helpers;
 
 namespace Fakelaki.Api.Controllers
 {
@@ -22,11 +23,22 @@ namespace Fakelaki.Api.Controllers
         private readonly ILogger<FakelakiController> _logger;
         private IMapper _mapper;
         private readonly IFakelakiService _fakelakiService;
-        public FakelakiController(ILogger<FakelakiController> logger, IMapper mapper, IFakelakiService fakelakiService)
+        private IUserService _userService;
+
+        // Uncomment and replace with a real secret. You can find your endpoint's
+        // secret in your webhook settings.
+        private string webhookSecret = string.Empty;
+
+        public FakelakiController(ILogger<FakelakiController> logger, IMapper mapper, IFakelakiService fakelakiService, IUserService userService, StripeSettings stripeSettings)
         {
             _logger = logger;
             _mapper = mapper;
             _fakelakiService = fakelakiService;
+            _userService = userService;
+            // Set your secret key. Remember to switch to your live secret key in production!
+            // See your keys here: https://dashboard.stripe.com/account/apikeys
+            StripeConfiguration.ApiKey = stripeSettings.ApiKey;
+            webhookSecret = stripeSettings.WebhookSecret;
         }
 
         [HttpGet("{userId}")]
@@ -54,9 +66,6 @@ namespace Fakelaki.Api.Controllers
 
             try
             {
-                // Set your secret key. Remember to switch to your live secret key in production!
-                // See your keys here: https://dashboard.stripe.com/account/apikeys
-                StripeConfiguration.ApiKey = "sk_test_4eC39HqLyjWDarjtT1zdp7dc";// TODO
 
                 var service = new PaymentIntentService();
                 var createOptions = new PaymentIntentCreateOptions
@@ -67,11 +76,11 @@ namespace Fakelaki.Api.Controllers
                       },
                     Amount = model.Amount,
                     Currency = "eur",
-                    ApplicationFeeAmount = 100, //The fee that we get
+                    ApplicationFeeAmount = 100, //The fee that we get 1.00 EUR
                 };
 
                 var requestOptions = new RequestOptions();
-                requestOptions.StripeAccount = "{{CONNECTED_STRIPE_ACCOUNT_ID}}";// TODO
+                requestOptions.StripeAccount = _userService.GetAccountIdByEventid(eventId);
 
 
                 PaymentIntent paymentIntent = service.Create(createOptions, requestOptions);
@@ -94,9 +103,6 @@ namespace Fakelaki.Api.Controllers
         {
             var json = await new StreamReader(HttpContext.Request.Body).ReadToEndAsync();
 
-            // Uncomment and replace with a real secret. You can find your endpoint's
-            // secret in your webhook settings.
-            const string webhookSecret = "whsec_...";// TODO
 
             // Verify webhook signature and extract the event.
             // See https://stripe.com/docs/webhooks/signatures for more information.
