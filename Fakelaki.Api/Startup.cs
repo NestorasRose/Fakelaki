@@ -85,7 +85,8 @@ namespace Fakelaki.Api
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
             // Register Context
-            services.AddDbContext<FakelakiContext>(p => p.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            //services.AddDbContext<FakelakiContext>(p => p.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"))); //when ready to deploy
+            services.AddDbContext<FakelakiContext>(options => options.UseInMemoryDatabase("FakelakiDatabase"));
 
             // configure DI for application services
             services.AddScoped<IUserService, UserService>();
@@ -111,8 +112,11 @@ namespace Fakelaki.Api
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, FakelakiContext ctx)
         {
+
+            new FakelakiGenerator(ctx).FakelakiDataSeed();
+
             // Enable middleware to serve generated Swagger as a JSON endpoint.
             app.UseSwagger();
 
