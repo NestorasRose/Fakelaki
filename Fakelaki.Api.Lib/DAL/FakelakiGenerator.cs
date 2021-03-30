@@ -39,28 +39,31 @@ namespace Fakelaki.Api.Lib.DAL
                 PasswordHash = passwordHash,
                 PasswordSalt = passwordSalt,
                 AccountId = "test",
-                Id = 1
+                Events = new List<Models.Event>()
+                {
+                    new Models.Event()
+                    {
+                        Name = "Event Test",
+                        StartDate = DateTime.Today,
+                        EndDate = DateTime.Today.AddMonths(1),
+                        Type = Enums.EventType.Wedding,
+                        Fakelakia = new List<Models.Fakelaki>()
+                        {
+                            new Models.Fakelaki()
+                                {
+                                    SuccessfullPayment = true,
+                                    Amount = 10,
+                                    EmailTemplate = null,
+                                    CreatedDate = DateTime.Today.AddDays(2),
+                                    Message = "I wish you all the best!",
+                                    SenderName = "Jon",
+                                    SenderSurname = "Dow"
+                                }
+                        }
+                    }
+                }
             });
 
-            ctx.Users.FirstOrDefault().Events.Add(new Models.Event()
-            {
-                Id = 1,
-                Name = "Event Test",
-                StartDate = DateTime.Today,
-                EndDate = DateTime.Today.AddMonths(1),
-                Type = Enums.EventType.Wedding
-            });
-
-            ctx.Users.FirstOrDefault().Events.FirstOrDefault().Fakelakia.Add(new Models.Fakelaki()
-            {
-                SuccessfullPayment = true,
-                Amount = 10,
-                EmailTemplate = null,
-                CreatedDate = DateTime.Today.AddDays(2),
-                Message = "I wish you all the best!",
-                SenderName = "Jon",
-                SenderSurname = "Dow"
-            });
 
             ctx.SaveChanges();
         }

@@ -111,7 +111,7 @@ namespace Fakelaki.Api.Controllers
             }
         }
 
-        [HttpGet]
+        [HttpGet("All")]
         public IActionResult GetAll()
         {
             var users = _userService.GetAll();

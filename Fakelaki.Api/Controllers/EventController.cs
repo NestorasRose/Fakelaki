@@ -42,7 +42,7 @@ namespace Fakelaki.Api.Controllers
         }
 
 
-        [HttpGet("{userId}")]
+        [HttpGet("GetAllUserEvents/{userId}")]
         public IActionResult GetAllUserEvents(int userId)
         {
             var model = _mapper.Map<IList<EventModel>>(_eventService.GetByUser(userId)).ToList();
