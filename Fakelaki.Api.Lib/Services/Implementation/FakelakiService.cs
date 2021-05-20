@@ -19,9 +19,9 @@ namespace Fakelaki.Api.Lib.Services.Implementation
         }
 
 
-        public ICollection<Models.Fakelaki> GetByEvent(int fakelakiId)
+        public IEnumerable<Models.Fakelaki> GetByEvent(int eventId, int? fakelakiId)
         {
-            return _context.Events.Find(fakelakiId).Fakelakia;
+            return _context.Fakelakia.Where(x => x.EventId == eventId && (fakelakiId == null || x.Id == fakelakiId)).AsEnumerable();
         }
 
         public void SetSuccessfullPayment(string paymentIntentId)

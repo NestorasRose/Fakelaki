@@ -5,7 +5,7 @@ namespace Fakelaki.Api.Lib.Services.Interfaces
 {
     public interface IFakelakiService
     {
-        ICollection<Models.Fakelaki> GetByEvent(int fakelakiId);
+        IEnumerable<Models.Fakelaki> GetByEvent(int eventId, int? fakelakiId);
 
         void SetSuccessfullPayment(string paymentIntentId);
 

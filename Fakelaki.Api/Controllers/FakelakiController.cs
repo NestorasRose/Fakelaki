@@ -1,17 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
-using Fakelaki.Api.Lib.DAL;
 using Fakelaki.Api.Lib.Services.Interfaces;
-using Fakelaki.Api.Lib.Models;
 using Fakelaki.Api.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Stripe;
 using System.IO;
 using Fakelaki.Api.Helpers;
+using Microsoft.Extensions.Options;
 
 namespace Fakelaki.Api.Controllers
 {
@@ -24,27 +22,28 @@ namespace Fakelaki.Api.Controllers
         private IMapper _mapper;
         private readonly IFakelakiService _fakelakiService;
         private IUserService _userService;
-
+        private StripeSettings _stripeSettings;
         // Uncomment and replace with a real secret. You can find your endpoint's
         // secret in your webhook settings.
         private string webhookSecret = string.Empty;
 
-        public FakelakiController(ILogger<FakelakiController> logger, IMapper mapper, IFakelakiService fakelakiService, IUserService userService, StripeSettings stripeSettings)
+        public FakelakiController(ILogger<FakelakiController> logger, IMapper mapper, IFakelakiService fakelakiService, IUserService userService, IOptions<StripeSettings> stripeSettings)
         {
             _logger = logger;
             _mapper = mapper;
             _fakelakiService = fakelakiService;
             _userService = userService;
+            _stripeSettings = stripeSettings.Value;
             // Set your secret key. Remember to switch to your live secret key in production!
             // See your keys here: https://dashboard.stripe.com/account/apikeys
-            StripeConfiguration.ApiKey = stripeSettings.ApiKey;
-            webhookSecret = stripeSettings.WebhookSecret;
+            StripeConfiguration.ApiKey = _stripeSettings.ApiKey;
+            webhookSecret = _stripeSettings.WebhookSecret;
         }
 
-        [HttpGet("{userId}")]
-        public IActionResult GetAllEventFakelakia(int fakelakiId)
+        [HttpGet("{eventId}")]
+        public IActionResult GetAllEventFakelakia(int eventId, int? fakelakiId)
         {
-            var fakelakia = _fakelakiService.GetByEvent(fakelakiId);
+            var fakelakia = _fakelakiService.GetByEvent(eventId, fakelakiId);
             var model = _mapper.Map<IList<FakelakiModel>>(fakelakia);
             return Ok(model);
         }
